@@ -4,10 +4,10 @@ class Vector{
   private PVector destino;
   private PVector componentes;
   private String nombre;
-  private int tamañoFlecha =10;
+  private Integer tamañoFlecha = 11;
   private color colorVector;
   
-  /** Constructor sin parametros origen 0*/
+  /** Constructor parametrizado origen 0*/
   public Vector(PVector destino, String nombre){
     this.nombre = nombre;
     this.origen = new PVector(0,0);
@@ -33,29 +33,31 @@ class Vector{
     // Dibujar el nombre del vector en el punto medio
     float puntoMedioX = (this.origen.x + this.destino.x) / 2;
     float puntoMedioY = (this.origen.y + this.destino.y) / 2;
-   
-    fill(0);
+    fill(70);
     textSize(16);
     textAlign(CENTER,TOP);
     text(this.nombre, puntoMedioX, puntoMedioY);
     
     // Dibujar la flecha al final del vector
     float angle = atan2(this.componentes.y, this.componentes.x); //Calcula angulo entre la linea Esto nos dará el ángulo en radianes.
-
     strokeWeight(0);
-    pushMatrix(); // Se guarda la configuración actual de la matriz de transformación en una pila de matrices. Esto es necesario para asegurarse de que las transformaciones aplicadas a la flecha no afecten a otros objetos que se dibujen después.
-    translate(this.destino.x, this.destino.y); // Se traslada el origen del sistema de coordenadas al punto final del vector. Esto asegura que la flecha se dibuje en la posición correcta.
-    rotate(angle); //Se rota el sistema de coordenadas al ángulo de la línea que representa el vector. Esto asegura que la flecha se dibuje en la dirección correcta.
-    triangle(-this.tamañoFlecha,this.tamañoFlecha/2 , -this.tamañoFlecha, -this.tamañoFlecha/2, 0, 0); //El triángulo se dibuja con co.
-    popMatrix(); // Se restaura la matriz de transformación a la configuración guardada anteriormente en la pila. Esto asegura que las transformaciones aplicadas a la flecha no afecten a otros objetos que se dibujen después.
+    pushMatrix(); // Todos los cambios aplicados no afectaran a otros objetos que se dibujen después.
+      translate(this.destino.x, this.destino.y); // Se traslada el origen del sistema de coordenadas al punto final del vector
+      rotate(angle); //Se rota el sistema de coordenadas al ángulo del vector
+      triangle(-this.tamañoFlecha,this.tamañoFlecha/2 , -this.tamañoFlecha, -this.tamañoFlecha/2, 0, 0);
+      
+      /*stroke(0);
+      strokeWeight(1);
+      line(0,-200,0,200);*/
+    popMatrix();
   
   }
   /** Metodo que suma dos Vectores*/
-  public Vector sumar(Vector sumando){
-    Vector vectorSuma = new Vector(this.destino, 
+  public Vector sumar(Vector sumando, String nombre){
+    Vector vectorSuma = new Vector(this.origen, 
                         PVector.add(this.destino, sumando.getComponentes()), 
-                        sumando.getNombre()+"'",
-                        sumando.getColor());
+                        nombre,
+                        color(random(255),random(255),random(255)));
     return vectorSuma;
   }
 
@@ -83,5 +85,9 @@ class Vector{
   }
   public color getColor(){
     return this.colorVector;
+  }
+  
+  public void  setColor(color colorVector){
+    this.colorVector = colorVector;
   }
 }
