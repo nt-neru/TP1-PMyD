@@ -1,11 +1,14 @@
-// Objetos
+/* -- DECLARACIÓN DE VARIABLES -- */
+/** Representan los vectores a utilizar*/
 private Vector vectorAB, vectorAC, vectorAD, vectorDB, vectorDC;
+/** Representan los puntos que conformaran el paralelogramo*/
 private Punto puntoA, puntoB, puntoC, puntoD;
 
 // Variables Globales
 private Integer unidad=50;
 private PVector centroPantalla;
 
+/** Setup, se ejecuta una sola vez. */
 public void setup(){
   size(700,700);
   
@@ -32,9 +35,9 @@ public void setup(){
                       "D");
 }
 
+/** Draw, se actualiza una vez cada {frameRate()} segundos. */
 public void draw(){
   background(255);
-  
   dibujarFondo();
   
   puntoA.display();
@@ -49,21 +52,23 @@ public void draw(){
   
   puntoD.display();
 }
-
+ /** Metodo que agrega la posicion en X segun el centro del plano y la unidad de escala */
 public float agregarX(Integer cant){
   return centroPantalla.x + unidad*cant;
 }
 
+ /** Metodo que agrega la posicion en Y segun el centro del plano y la unidad de escala */
 public float agregarY(Integer cant){
   return centroPantalla.y + unidad*cant*(-1);
 }
 
+ /** Metodo que dibuja los ejes cartesianos */
 public void dibujarFondo(){
   stroke(203,226,255);
   strokeWeight(1);
   fill(180);
   
-  //lineas horizontales
+  // Ejes horizontales
   textAlign(RIGHT, CENTER);
   for(int i=0 ; i*unidad < centroPantalla.y ; i++){
     line(0,agregarY(i), width , agregarY(i));
@@ -76,7 +81,7 @@ public void dibujarFondo(){
     else text(i, centroPantalla.x -6, agregarY(i));
   }
   
-  //lineas verticales
+  // Ejes verticales
   textAlign(CENTER,TOP);
   for(int i=0 ; i*unidad < width ; i++){
     line(agregarX(i), 0 , agregarX(i) , height);
@@ -87,7 +92,7 @@ public void dibujarFondo(){
     if(i!=0)  text(i, agregarX(i), centroPantalla.y);
   }
   
-  // Dibujando centro
+  // Dibujando ejes centrales
   stroke(180);
   strokeWeight(1.5);
   line(centroPantalla.x, 0, centroPantalla.x,height);

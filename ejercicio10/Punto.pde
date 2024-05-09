@@ -1,7 +1,14 @@
+/** Clase que representa a un punto */
 class Punto{
-  /** Atributos */
+  /*  -- ATRIBUTOS --  */
+  /** Representa el nombre del punto */
   private String nombre;
+  /** Representa las coordenadas x e y del punto */
   private PVector coordenadas;
+  
+  /*  -- CONSTRUCTORES --  */
+  /** Constructor por defecto*/
+  public Punto(){}
   
   /** Constructor parametrizado */
   public Punto(PVector coordenadas, String nombre){
@@ -9,7 +16,8 @@ class Punto{
     this.nombre = nombre;
   }
   
-  /** Metodo que dibuja al punto */
+  /*  -- ATRIBUTOS --  */
+  /** Metodo que dibuja el punto */
   public void display(){
     strokeWeight(10);
     stroke(0, 191, 255,150); // Color celeste
@@ -22,8 +30,15 @@ class Punto{
     text(nombre, this.coordenadas.x, this.coordenadas.y-3);
   }
   
-  /** Gets */
+  /* -- ACCESORES (GETTERS Y SETTERS) -- */
+  /* Getters */
+  /** Devuelve el valor de las coordenadas del punto */
   public PVector getCoordenadas(){
     return this.coordenadas;
+  }
+  /*Setters*/
+  /** Asigna unas nuevas coordenadas al punto*/
+  public void setCoordenadas(PVector coordenadas){
+    this.coordenadas = coordenadas;
   }
 }

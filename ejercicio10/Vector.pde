@@ -1,11 +1,22 @@
+/** Clase que representa a un vector */
 class Vector{
-  /** Atributos*/
+  /*  -- ATRIBUTOS --  */
+  /** Representa las coordenadas del origen del vector*/
   private PVector origen;
+  /** Representa las coordenadas del destino del vector */
   private PVector destino;
+  /** Repreesnta los componentes x e y del vector */
   private PVector componentes;
+  /** Representa el nombre del vector */
   private String nombre;
+  /** Representa el tamaño de la flecha del vector */
   private Integer tamañoFlecha = 11;
+  /** Representa el color del vector */
   private color colorVector;
+  
+  /*  -- CONSTRUCTORES --  */
+  /** Constructor por defecto */
+  public Vector(){}
   
   /** Constructor parametrizado origen 0*/
   public Vector(PVector destino, String nombre){
@@ -24,7 +35,8 @@ class Vector{
     this.colorVector = colorVector;
   }
   
-  /** Metodo que dibuja el vector */
+  /*  -- METODOS --  */
+  /** Metodo que dibuja al vector */
   public void display(){
     strokeWeight(2);
     stroke(this.colorVector);
@@ -45,10 +57,6 @@ class Vector{
       translate(this.destino.x, this.destino.y); // Se traslada el origen del sistema de coordenadas al punto final del vector
       rotate(angle); //Se rota el sistema de coordenadas al ángulo del vector
       triangle(-this.tamañoFlecha,this.tamañoFlecha/2 , -this.tamañoFlecha, -this.tamañoFlecha/2, 0, 0);
-      
-      /*stroke(0);
-      strokeWeight(1);
-      line(0,-200,0,200);*/
     popMatrix();
   
   }
@@ -70,23 +78,32 @@ class Vector{
     return vectorResta;
   }
   
-  //** Gets y Sets*/
+  /*  -- ACCESORES (GETTERS Y SETTERS) --  */
+  /* Getters*/
+  /** Devuelve las coordenadas del punto origen del vector */
   public PVector getOrigen(){
     return this.origen;
   }
-  public PVector getComponentes(){
-    return this.componentes;
-  }
-  public String getNombre(){
-    return this.nombre;
-  }
+  /** Devuelve las coordenadas del punto destino del vector */
   public PVector getDestino(){
     return this.destino;
   }
+  /** Devuelve los componentes del vector */
+  public PVector getComponentes(){
+    return this.componentes;
+  }
+  /** Devuelve el nombre del vector */
+  public String getNombre(){
+    return this.nombre;
+  }
+  
+  /** Devuelve el color del vector */
   public color getColor(){
     return this.colorVector;
   }
   
+  /* Setters */
+  /** Asigna un nuevo color al vector */
   public void  setColor(color colorVector){
     this.colorVector = colorVector;
   }
