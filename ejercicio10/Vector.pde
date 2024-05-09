@@ -2,53 +2,86 @@ class Vector{
   /** Atributos*/
   private PVector origen;
   private PVector destino;
+  private PVector componentes;
+  private String nombre;
+  private int tamañoFlecha =10;
+  private color colorVector;
   
-  /** Constructor sin parametros*/
-  public Vector(){}
-  
-  /** Constructor parametrizado */
-  public Vector(PVector origen, PVector destino){
-    this.origen = origen;
+  /** Constructor sin parametros origen 0*/
+  public Vector(PVector destino, String nombre){
+    this.nombre = nombre;
+    this.origen = new PVector(0,0);
     this.destino = destino;
+    this.componentes = this.destino;
   }
   
-  /** Metodo que dibuja al vector */
+  /** Constructor parametrizado, Vector con origen y destino */
+  public Vector(PVector origen, PVector destino, String nombre, color colorVector ){
+    this.origen = origen;
+    this.destino = destino;
+    this.nombre = nombre;
+    this.componentes = PVector.sub(this.destino,this.origen);
+    this.colorVector = colorVector;
+  }
+  
+  /** Metodo que dibuja el vector */
   public void display(){
     strokeWeight(2);
-    line(origen.x, origen.y, destino.x, destino.y);
+    stroke(this.colorVector);
+    line(this.origen.x, this.origen.y, this.destino.x, this.destino.y);
+    
+    // Dibujar el nombre del vector en el punto medio
+    float puntoMedioX = (this.origen.x + this.destino.x) / 2;
+    float puntoMedioY = (this.origen.y + this.destino.y) / 2;
+   
+    fill(0);
+    textSize(16);
+    textAlign(CENTER,TOP);
+    text(this.nombre, puntoMedioX, puntoMedioY);
+    
+    // Dibujar la flecha al final del vector
+    float angle = atan2(this.componentes.y, this.componentes.x); //Calcula angulo entre la linea Esto nos dará el ángulo en radianes.
+
+    strokeWeight(0);
+    pushMatrix(); // Se guarda la configuración actual de la matriz de transformación en una pila de matrices. Esto es necesario para asegurarse de que las transformaciones aplicadas a la flecha no afecten a otros objetos que se dibujen después.
+    translate(this.destino.x, this.destino.y); // Se traslada el origen del sistema de coordenadas al punto final del vector. Esto asegura que la flecha se dibuje en la posición correcta.
+    rotate(angle); //Se rota el sistema de coordenadas al ángulo de la línea que representa el vector. Esto asegura que la flecha se dibuje en la dirección correcta.
+    triangle(-this.tamañoFlecha,this.tamañoFlecha/2 , -this.tamañoFlecha, -this.tamañoFlecha/2, 0, 0); //El triángulo se dibuja con co.
+    popMatrix(); // Se restaura la matriz de transformación a la configuración guardada anteriormente en la pila. Esto asegura que las transformaciones aplicadas a la flecha no afecten a otros objetos que se dibujen después.
+  
   }
   /** Metodo que suma dos Vectores*/
   public Vector sumar(Vector sumando){
-    Vector vectorSuma = new Vector();
-    vectorSuma.origen = this.destino;
-    vectorSuma.destino = PVector.add(this.destino, sumando.destino);
-    vectorSuma.destino.sub(sumando.origen);
+    Vector vectorSuma = new Vector(this.destino, 
+                        PVector.add(this.destino, sumando.getComponentes()), 
+                        sumando.getNombre()+"'",
+                        sumando.getColor());
     return vectorSuma;
   }
 
   /** Metodo que resta dos Vectores*/
-  // BD - AB B=origen D=destino
-  public Vector restar(Vector sustraendo){ //AB   A=origen B=Destino
-    Vector vectorResta = new Vector();
-    vectorResta.origen = this.destino;
-    vectorResta.destino = PVector.sub(this.destino, sustraendo.destino);
-    vectorResta.destino.add(sustraendo.origen);
+  public Vector restar(Vector sustraendo){ 
+    Vector vectorResta = new Vector(this.destino, 
+                         PVector.sub(this.destino, sustraendo.getComponentes()), 
+                         "-"+sustraendo.getNombre()+"'",
+                         sustraendo.getColor());
     return vectorResta;
-    //es en base a coordenadas
   }
   
   //** Gets y Sets*/
-  public void setOrigen(PVector origen){
-    this.origen = origen;
-  }
   public PVector getOrigen(){
     return this.origen;
   }
-  
-  public void setDestino(PVector destino){
-    this.destino = destino;
+  public PVector getComponentes(){
+    return this.componentes;
+  }
+  public String getNombre(){
+    return this.nombre;
   }
   public PVector getDestino(){
     return this.destino;
+  }
+  public color getColor(){
+    return this.colorVector;
   }
 }
