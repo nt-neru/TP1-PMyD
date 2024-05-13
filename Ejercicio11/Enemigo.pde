@@ -29,23 +29,13 @@ class Enemigo extends GameObject{
   }
   
   /* -- METODOS -- */
+  /** Dibujando al enemigo */
   public void display(){
     this.sprite.render(this.estadoAnim, new PVector(this.posicion.x,this.posicion.y-30));
-    //this.mirando.display();
-    
-    // Crea un nuevo vector de magnitud 1 con el angulo especificado
-    /*PVector direccion = PVector.fromAngle(radians(anguloVision));
-    PVector direccion2 = PVector.fromAngle(radians(-anguloVision));
-    
-    PVector puntoFinal = PVector.add(this.posicion, direccion.mult(700));
-    PVector puntoFinal2 = PVector.add(this.posicion, direccion2.mult(700));
-    
-    line(this.posicion.x, this.posicion.y, puntoFinal.x, puntoFinal.y);
-    line(this.posicion.x, this.posicion.y, puntoFinal2.x, puntoFinal2.y);
-    */
   }
   
-  public void detectarJugador(Jugador jugador){
+  /** Deteccion del enemigo con el jugador */
+  public boolean detectarJugador(GameObject jugador){
     // Vector relacion entre el enemigo y el jugador
     this.enemigoJugador.origen = this.posicion;
     this.enemigoJugador.destino = PVector.sub(jugador.getPosicion(), this.posicion).normalize().mult(150);
@@ -55,19 +45,6 @@ class Enemigo extends GameObject{
     angulo = degrees(angulo);
     textSize(40);
 
-    if (angulo <= anguloVision){ // esta en el campo de vision
-      fill(255,0,0);
-      this.estadoAnim = MaquinaEstadosAnimacion.ATACK;
-      jugador.setEstadoAnim(MaquinaEstadosAnimacion.ATACK);
-      dispararBala();
-    }
-    else{ // esta fuera del campo de vision
-      this.estadoAnim = MaquinaEstadosAnimacion.MOV;
-      jugador.setEstadoAnim(MaquinaEstadosAnimacion.MOV);
-      this.primerDisparo = true;
-      contTiempo=0;
-    }
-    
     // VISUALIZACION DE PARAMETROS
     textSize(20);
     fill(255);
@@ -79,14 +56,24 @@ class Enemigo extends GameObject{
     text("Angulo del jugador desde el enemigo: " + nfc(angulo,1) +"°",50,130);
     fill(255);
     text("Angulo de Vision: " + anguloVision +"°",50,160);
+    
+    if (angulo <= anguloVision){ // esta en el campo de vision
+      return true;
+    }
+    else{ // esta fuera del campo de vision
+      this.primerDisparo = true;
+      contTiempo=0;
+      return false;
+    }
   }  // end detectarJugador
   
-  public void dispararBala(){  
+  /** Metodo que dispara una bala segun el tiempo de recarga */
+  public void dispararBala(){
     float tiempoActual = millis(); // Obtiene el tiempo actual en milisegundos
-    if (primerDisparo) { // Si es el primer disparo
+    if (primerDisparo) { 
       if(tiempoActual - tiempoInicial >= 100){
         contTiempo++;
-        tiempoInicial = tiempoActual; // Actualiza el tiempo anterior
+        tiempoInicial = tiempoActual; // Actualiza el tiempo inicial
       }
       if(contTiempo >= esperaInical) { // Si ha pasado el tiempo de espera inicial
         primerDisparo = false; // Marcar el primer disparo como realizado
@@ -97,7 +84,6 @@ class Enemigo extends GameObject{
       gestorBalas.generarBala(this.posicion,direccion);
       tiempoUltimoDisparo = tiempoActual;// Actualiza el tiempo del último disparo
     }
-    println(contTiempo);
   }
   
   /* -- ASESORES -- */

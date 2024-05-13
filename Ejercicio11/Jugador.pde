@@ -29,7 +29,6 @@ class Jugador extends GameObject{
   public void setEstadoAnim(int estado){
     this.estadoAnim = estado;
   }
-  
   /* Getters */
   public Integer getEstadoAnim(){
     return this.estadoAnim;

@@ -31,9 +31,11 @@ class  Vector{
     popMatrix();
   }
   
+  /** Metodo que devuelve el producto punto de dos vectores*/
   public float obtenerProductoPunto(Vector vector){
     return PVector.dot(this.destino,vector.getDestino());
   }
+  /** Metodo que devuelve la magnitud de un vector */
   public float obtenerMagnitud(){
     return this.destino.mag();
   }

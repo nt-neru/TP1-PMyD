@@ -18,7 +18,7 @@ class Bala extends GameObject{
   }
   
   /* -- MÉTODOS -- */
-  /** Dibuja la llave en el escenario */
+  /** Dibuja la bala en el escenario */
   public void display() {    
     this.sprite.render(this.estadoAnim,this.posicion);
   }
@@ -27,6 +27,8 @@ class Bala extends GameObject{
     this.posicion.add(this.direccion);
   }
   
+  /* -- ASESORES -- */
+  /* Setters */
   public void setDireccion(PVector direccion){
     this.direccion = direccion;
   }

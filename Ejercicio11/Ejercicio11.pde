@@ -32,5 +32,14 @@ public void draw(){
   
   gestorBalas.mostrarBalas();
   gestorBalas.moverBalas();
-  //println(frameRate);
+  
+  if(enemigo.detectarJugador(jugador)){
+    enemigo.setEstadoAnim(MaquinaEstadosAnimacion.ATACK);
+    jugador.setEstadoAnim(MaquinaEstadosAnimacion.ATACK);
+    enemigo.dispararBala();
+  }
+  else{
+    enemigo.setEstadoAnim(MaquinaEstadosAnimacion.MOV);
+    jugador.setEstadoAnim(MaquinaEstadosAnimacion.MOV);
+  }
 }

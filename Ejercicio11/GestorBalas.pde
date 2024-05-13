@@ -11,7 +11,7 @@ class GestorBalas {
   }
 
   /* -- MÉTODOS -- */
-  /** Mostrando los enemigos */
+  /** Mostrando las balas */
   public void mostrarBalas() {
     for (int i = this.balas.size() - 1; i >= 0; i--) {
       Bala bala = this.balas.get(i);
@@ -21,12 +21,13 @@ class GestorBalas {
       }
     }
   }
+  /** Mover las balas */
   public void moverBalas(){
     for (Bala e : this.balas) {      
       e.mover();
     }
   }
-  /** Genera el grupo de enemigos */
+  /** Agregar una bala */
   public void generarBala(PVector posicion, PVector direccion) {
     Bala e = new Bala(new PVector(posicion.x, posicion.y), 60, 60, direccion);
     this.balas.add(e);
