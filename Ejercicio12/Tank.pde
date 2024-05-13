@@ -1,4 +1,4 @@
-/** Clase que representa al enemigo*/
+/** Clase que representa al Tanque*/
 class Tank extends GameObject{
   /* -- ATRIBUTOS -- */
   private SpriteObject sprite;
@@ -7,6 +7,10 @@ class Tank extends GameObject{
   private Vector enemigoJugador;
   private float anguloVision = 30;
   private float distanciaVision = 400;
+  
+  private float tiempoDisparo = 400;
+  private float velocidadDisparo = 12;
+  private float tiempoUltimoDisparo;
   
   /* -- CONSTRUCTORES -- */
   /** Constructor por Defecto */
@@ -102,6 +106,16 @@ class Tank extends GameObject{
       translate(this.posicion.x, this.posicion.y);
       rotate(angulo*clockWise);
       displayCenter();
+  }
+  
+  /** Metodo que dispara una bala segun el tiempo de recarga */
+  public void dispararBala(){
+    float tiempoActual = millis(); // Obtiene el tiempo actual en milisegundos
+    if(tiempoActual - tiempoUltimoDisparo > tiempoDisparo) {  
+      PVector direccion = new PVector(enemigoJugador.getDestino().x, enemigoJugador.getDestino().y).normalize().mult(velocidadDisparo);
+      gestorBalas.generarBala(new PVector(this.posicion.x,this.posicion.y),direccion); // -123 en posicion.y para que salga desde el centro 
+      tiempoUltimoDisparo = tiempoActual;// Actualiza el tiempo del último disparo
+    }
   }
   
   /* -- ASESORES -- */
