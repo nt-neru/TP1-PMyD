@@ -6,6 +6,13 @@ class Enemigo extends GameObject{
   private Vector mirando;
   private Vector enemigoJugador;
   private float anguloVision = 30;
+  private float tiempoDisparo = 790;
+  private float esperaInical = 6; 
+  private float velocidadDisparo = 8;
+  private float tiempoUltimoDisparo;
+  private float tiempoInicial;
+  private int contTiempo;
+  private boolean primerDisparo = true;
   
   /* -- CONSTRUCTORES -- */
   /** Constructor por Defecto */
@@ -24,26 +31,24 @@ class Enemigo extends GameObject{
   /* -- METODOS -- */
   public void display(){
     this.sprite.render(this.estadoAnim, new PVector(this.posicion.x,this.posicion.y-30));
-    this.mirando.display();
+    //this.mirando.display();
     
-    // Calcular el vector de dirección del ángulo de visión
-    PVector direccion = PVector.fromAngle(radians(anguloVision));
+    // Crea un nuevo vector de magnitud 1 con el angulo especificado
+    /*PVector direccion = PVector.fromAngle(radians(anguloVision));
     PVector direccion2 = PVector.fromAngle(radians(-anguloVision));
     
-    // Calcular el punto final del campo de visión
     PVector puntoFinal = PVector.add(this.posicion, direccion.mult(700));
     PVector puntoFinal2 = PVector.add(this.posicion, direccion2.mult(700));
     
-    // Dibujar la línea que representa el campo de visión
     line(this.posicion.x, this.posicion.y, puntoFinal.x, puntoFinal.y);
     line(this.posicion.x, this.posicion.y, puntoFinal2.x, puntoFinal2.y);
+    */
   }
   
   public void detectarJugador(GameObject jugador){
     // Vector relacion entre el enemigo y el jugador
     this.enemigoJugador.origen = this.posicion;
     this.enemigoJugador.destino = PVector.sub(jugador.getPosicion(), this.posicion).normalize().mult(150);
-    this.enemigoJugador.display();
     
     float dotProducto = mirando.obtenerProductoPunto(enemigoJugador);
     float angulo = acos(dotProducto/(mirando.obtenerMagnitud() * enemigoJugador.obtenerMagnitud()));
@@ -52,10 +57,13 @@ class Enemigo extends GameObject{
 
     if (angulo <= anguloVision){ // esta en el campo de vision
       fill(255,0,0);
-      text(" Esta al frente ",enemigo.getPosicion().x-100,enemigo.getPosicion().y);
+      this.estadoAnim = MaquinaEstadosAnimacion.ATACK;
+      dispararBala();
     }
-    else if (angulo > anguloVision){ // esta fuera del campo de vision
-      text(" No hay nada ",enemigo.getPosicion().x-100,enemigo.getPosicion().y);
+    else{ // esta fuera del campo de vision
+      this.estadoAnim = MaquinaEstadosAnimacion.MOV;
+      this.primerDisparo = true;
+      contTiempo=0;
     }
     
     // VISUALIZACION DE PARAMETROS
@@ -70,6 +78,25 @@ class Enemigo extends GameObject{
     fill(255);
     text("Angulo de Vision: " + anguloVision +"°",50,160);
   }  // end detectarJugador
+  
+  public void dispararBala(){  
+    float tiempoActual = millis(); // Obtiene el tiempo actual en milisegundos
+    if (primerDisparo) { // Si es el primer disparo
+      if(tiempoActual - tiempoInicial >= 100){
+        contTiempo++;
+        tiempoInicial = tiempoActual; // Actualiza el tiempo anterior
+      }
+      if(contTiempo >= esperaInical) { // Si ha pasado el tiempo de espera inicial
+        primerDisparo = false; // Marcar el primer disparo como realizado
+      }
+    }
+    else if(tiempoActual - tiempoUltimoDisparo > tiempoDisparo) {  
+      PVector direccion = new PVector(enemigoJugador.getDestino().x, enemigoJugador.getDestino().y).normalize().mult(velocidadDisparo);
+      gestorBalas.generarBala(this.posicion,direccion);
+      tiempoUltimoDisparo = tiempoActual;// Actualiza el tiempo del último disparo
+    }
+    println(contTiempo);
+  }
   
   /* -- ASESORES -- */
   /* Setters */

@@ -36,7 +36,7 @@ class SpriteObject {
     this.altoFrame = altoFrame;
     this.xFrame=0;
     this.yFrame=0;
-    this.velocidadAnimacion = 9;
+    this.velocidadAnimacion = 8;
   }
 
 
@@ -46,6 +46,7 @@ class SpriteObject {
     imageMode(CENTER);
     switch(estado) {
     case MaquinaEstadosAnimacion.MOV:{
+        yFrame = 0;
         //Dibujando el frame
         image(this.spriteSheet.get(this.xFrame, this.yFrame, this.anchoFrame, this.altoFrame), posicion.x, posicion.y);
         moverSprite();
@@ -55,7 +56,6 @@ class SpriteObject {
         image(this.spriteSheet.get(this.xFrame, this.yFrame, this.anchoFrame, this.altoFrame), posicion.x, posicion.y);
         break;
       }
-    
     case MaquinaEstadosAnimacion.ATACK:{
         yFrame = altoFrame;
         //Dibujando el frame

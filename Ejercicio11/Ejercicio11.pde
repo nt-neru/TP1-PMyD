@@ -2,6 +2,7 @@
 private Jugador jugador;
 private Enemigo enemigo, enemigoDefecto;
 private PImage fondo;
+private GestorBalas gestorBalas;
 
 public void setup(){
   size(1200,800);
@@ -9,6 +10,7 @@ public void setup(){
   jugador = new Jugador(new PVector(200,200),84,102);
   //enemigoDefecto = new Enemigo();
   enemigo = new Enemigo(new PVector(width/2,height/2),44*5,48*5);
+  gestorBalas = new GestorBalas();
   fondo = loadImage("Room.jpg");
   fondo.resize(width,height); 
 }
@@ -16,11 +18,6 @@ public void setup(){
 public void draw(){
   imageMode(CORNER);
   image(fondo, 0, 0, width, height);
-  
-  stroke(0);
-  strokeWeight(2);
-  line(0,height/2,width,height/2);
-  line(width/2,0,width/2,height);
   
   jugador.display();
   // Verifica si el mouse está sobre el jugador
@@ -33,4 +30,7 @@ public void draw(){
   enemigo.setEstadoAnim(MaquinaEstadosAnimacion.MOV);
   enemigo.detectarJugador(jugador);
   
+  gestorBalas.mostrarBalas();
+  gestorBalas.moverBalas();
+  //println(frameRate);
 }
