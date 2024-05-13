@@ -45,7 +45,7 @@ class Enemigo extends GameObject{
     */
   }
   
-  public void detectarJugador(GameObject jugador){
+  public void detectarJugador(Jugador jugador){
     // Vector relacion entre el enemigo y el jugador
     this.enemigoJugador.origen = this.posicion;
     this.enemigoJugador.destino = PVector.sub(jugador.getPosicion(), this.posicion).normalize().mult(150);
@@ -58,10 +58,12 @@ class Enemigo extends GameObject{
     if (angulo <= anguloVision){ // esta en el campo de vision
       fill(255,0,0);
       this.estadoAnim = MaquinaEstadosAnimacion.ATACK;
+      jugador.setEstadoAnim(MaquinaEstadosAnimacion.ATACK);
       dispararBala();
     }
     else{ // esta fuera del campo de vision
       this.estadoAnim = MaquinaEstadosAnimacion.MOV;
+      jugador.setEstadoAnim(MaquinaEstadosAnimacion.MOV);
       this.primerDisparo = true;
       contTiempo=0;
     }

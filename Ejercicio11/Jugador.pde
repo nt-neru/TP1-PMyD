@@ -13,7 +13,7 @@ class Jugador extends GameObject{
   /** Constructor Parametrizado */
   public Jugador(PVector posicion, int ancho, int alto){
     super(posicion,ancho,alto);
-    this.sprite = new SpriteObject("isaac sprite-sheet.png",ancho,alto);
+    this.sprite = new SpriteObject("isaac sprite.png",ancho,alto);
     this.estadoAnim = MaquinaEstadosAnimacion.MOV;
   }
   
