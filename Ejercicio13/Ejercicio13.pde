@@ -9,11 +9,12 @@ void setup() {
   wall = new Wall(new PVector(width/2,25),width,50 );
   balls = new ArrayList<Ball>();
   
-  balls.add(new Ball(new PVector(300,200), 20));
+  balls.add(new Ball(new PVector(width/2-24,height/2-150), 20));
 
 }
 
 void draw() {
+  frameRate(10);
   background(#67B766);
   rectMode(CENTER);
 
@@ -71,7 +72,7 @@ void draw() {
 }
 
 void mousePressed() {
-  // Verificar si el mouse está sobre la bola que se puede arrastrar
+  // Verifica si el mouse está sobre la bola que se puede arrastrar
   if (dist(mouseX, mouseY, whiteBall.posicion.x, whiteBall.posicion.y) < whiteBall.diametro / 2) {
     // Iniciar arrastre de la bola
     arrastrando = true;
@@ -81,9 +82,8 @@ void mousePressed() {
 
 void mouseReleased() {
   if (arrastrando) {
-    // Calcular la velocidad del golpe
+    // Calcula la velocidad del golpe
     whiteBall.golpear(PVector.sub(whiteBall.posicion, new PVector(mouseX, mouseY)).mult(0.08));
-
     arrastrando = false;
   }
 }
