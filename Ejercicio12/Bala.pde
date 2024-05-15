@@ -32,4 +32,14 @@ class Bala extends GameObject{
   public void setDireccion(PVector direccion){
     this.direccion = direccion;
   }
+  public void setEstadoAnim(int newEstado){
+    this.estadoAnim = newEstado;
+  }
+  /* Getters */
+  public PVector getDireccion(){
+    return this.direccion;
+  }
+  public int getEstadoAnim(){
+    return this.estadoAnim;
+  }
 }

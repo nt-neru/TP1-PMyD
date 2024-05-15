@@ -30,7 +30,7 @@ public void draw(){
   if(tank.detectarZombie(zombie)){
     tank.setEstadoAnim(MaquinaEstadosAnimacion.ATACK);    
     tank.giroDireccion();
-    tank.dispararBala();
+    tank.dispararBala(gestorBalas);
   }
   else{    
     tank.setEstadoAnim(MaquinaEstadosAnimacion.MOV);

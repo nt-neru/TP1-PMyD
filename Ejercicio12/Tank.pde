@@ -109,7 +109,7 @@ class Tank extends GameObject{
   }
   
   /** Metodo que dispara una bala segun el tiempo de recarga */
-  public void dispararBala(){
+  public void dispararBala(GestorBalas gestorBalas){
     float tiempoActual = millis(); // Obtiene el tiempo actual en milisegundos
     if(tiempoActual - tiempoUltimoDisparo > tiempoDisparo) {  
       PVector direccion = new PVector(enemigoJugador.getDestino().x, enemigoJugador.getDestino().y).normalize().mult(velocidadDisparo);
